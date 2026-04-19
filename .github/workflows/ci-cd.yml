@@ -1,0 +1,198 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  # ──────────────────────────────────────────────
+  # 1. Validar mensagem do commit na main
+  # ──────────────────────────────────────────────
+  validate-commit:
+    name: Validar mensagem do commit
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verificar palavra-chave de versão no commit
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Mensagem do commit: $COMMIT_MSG"
+
+          if echo "$COMMIT_MSG" | grep -qE "(patchVersion|majorVersion|minorVersion)"; then
+            echo "Palavra-chave de versão encontrada."
+          else
+            echo "ERRO: A mensagem do commit deve conter uma das palavras: patchVersion, majorVersion ou minorVersion."
+            echo "Exemplo: 'feat: adicionar login - minorVersion'"
+            exit 1
+          fi
+
+  # ──────────────────────────────────────────────
+  # 2. Build
+  # ──────────────────────────────────────────────
+  build:
+    name: Build
+    needs: [validate-commit]
+    if: always() && (needs.validate-commit.result == 'success' || needs.validate-commit.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Compilar projeto
+        run: ./mvnw compile -q
+
+      - name: Cache do Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+
+  # ──────────────────────────────────────────────
+  # 3. Testes unitários
+  # ──────────────────────────────────────────────
+  unit-tests:
+    name: Testes Unitários
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Executar testes unitários
+        run: ./mvnw test -q
+
+      - name: Upload relatório de testes unitários
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: target/surefire-reports/
+
+  # ──────────────────────────────────────────────
+  # 4. Testes de integração
+  # ──────────────────────────────────────────────
+  integration-tests:
+    name: Testes de Integração
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Executar testes de integração
+        run: ./mvnw verify -q -DskipUnitTests=true
+
+      - name: Upload relatório de testes de integração
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-reports
+          path: target/failsafe-reports/
+
+  # ──────────────────────────────────────────────
+  # 5. Release (só na main, após todos os testes)
+  # ──────────────────────────────────────────────
+  release:
+    name: Release
+    needs: [validate-commit, unit-tests, integration-tests]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Gerar JAR
+        run: ./mvnw package -q -DskipTests
+
+      - name: Extrair tipo de versão do commit
+        id: version
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG="v0.0.0"
+          fi
+
+          MAJOR=$(echo "$LATEST_TAG" | sed 's/v//' | cut -d. -f1)
+          MINOR=$(echo "$LATEST_TAG" | sed 's/v//' | cut -d. -f2)
+          PATCH=$(echo "$LATEST_TAG" | sed 's/v//' | cut -d. -f3)
+
+          if echo "$COMMIT_MSG" | grep -q "majorVersion"; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif echo "$COMMIT_MSG" | grep -q "minorVersion"; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          elif echo "$COMMIT_MSG" | grep -q "patchVersion"; then
+            PATCH=$((PATCH + 1))
+          fi
+
+          NEW_TAG="v${MAJOR}.${MINOR}.${PATCH}"
+          echo "tag=$NEW_TAG" >> "$GITHUB_OUTPUT"
+          echo "Nova versão: $NEW_TAG"
+
+      - name: Criar tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.version.outputs.tag }}
+          git push origin ${{ steps.version.outputs.tag }}
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.tag }}
+          body: |
+            ## Release ${{ steps.version.outputs.tag }}
+
+            **Commit:** ${{ github.sha }}
+            **Mensagem:** ${{ github.event.head_commit.message }}
+
+            ### Artefatos
+            - JAR da aplicação incluído nesta release
+          files: target/*.jar
+          generate_release_notes: true
