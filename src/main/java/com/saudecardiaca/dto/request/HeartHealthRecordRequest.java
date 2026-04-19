@@ -1,8 +1,13 @@
 package com.saudecardiaca.dto.request;
 
-import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 public class HeartHealthRecordRequest {
 
@@ -32,6 +37,7 @@ public class HeartHealthRecordRequest {
 
     private List<String> symptoms;
 
+    
     @NotNull(message = "Data/hora da medição é obrigatória")
     private LocalDateTime recordedAt;
 
