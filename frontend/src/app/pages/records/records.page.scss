@@ -1,0 +1,182 @@
+ion-toolbar {
+  --background: #fff;
+  --color: #333;
+
+  ion-title {
+    color: #333;
+  }
+
+  ion-button {
+    color: #555;
+  }
+
+  .title-icon {
+    color: #e74c3c;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+}
+
+.welcome-section {
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 4px;
+  }
+
+  p {
+    color: #888;
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+
+  p {
+    color: #888;
+    margin-top: 12px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 80px;
+
+  .empty-icon {
+    font-size: 80px;
+    color: #ccc;
+  }
+
+  h3 {
+    color: #666;
+    font-weight: 600;
+  }
+
+  p {
+    color: #999;
+    font-size: 14px;
+  }
+}
+
+.record-card {
+  border-radius: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+  ion-card-header {
+    padding-bottom: 4px;
+  }
+
+  .record-date {
+    font-size: 14px;
+    color: #888;
+    font-weight: 500;
+  }
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 12px;
+
+  ion-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .metric-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.symptoms-row {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  ion-chip {
+    --background: transparent;
+    font-size: 12px;
+    height: 28px;
+  }
+}
+
+// Modal
+.modal-form {
+  max-width: 480px;
+  margin: 0 auto;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    margin: 16px 0 8px;
+  }
+
+  ion-input {
+    margin-bottom: 12px;
+    --border-radius: 12px;
+  }
+}
+
+.symptom-input-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  ion-input {
+    flex: 1;
+  }
+}
+
+.symptom-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.error-text {
+  font-size: 13px;
+  text-align: center;
+}
+
+.save-btn {
+  margin-top: 16px;
+  --border-radius: 12px;
+  height: 48px;
+  font-weight: 600;
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+ion-fab-button {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}

@@ -1,0 +1,121 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/records" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Relatorio de Saude</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Filtro de periodo -->
+  <ion-card class="filter-card">
+    <ion-card-content>
+      <div class="filter-row">
+        <ion-input
+          label="De"
+          labelPlacement="floating"
+          fill="outline"
+          [(ngModel)]="startDate"
+          placeholder="dd/MM/yyyy"
+        ></ion-input>
+        <ion-input
+          label="Ate"
+          labelPlacement="floating"
+          fill="outline"
+          [(ngModel)]="endDate"
+          placeholder="dd/MM/yyyy"
+        ></ion-input>
+        <ion-button (click)="loadReport()" fill="solid" shape="round">
+          <ion-icon name="search-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Loading -->
+  <div class="center-content" *ngIf="loading">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Gerando relatorio...</p>
+  </div>
+
+  <!-- Error -->
+  <div class="center-content" *ngIf="!loading && errorMessage">
+    <ion-icon name="alert-circle-outline" class="error-icon"></ion-icon>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Report -->
+  <div *ngIf="report && !loading">
+    <!-- Risk Level -->
+    <ion-card class="risk-card">
+      <ion-card-content>
+        <div class="risk-display">
+          <ion-icon [name]="getRiskIcon()" [color]="getRiskColor()" class="risk-icon"></ion-icon>
+          <div>
+            <span class="risk-label">Nivel de Risco</span>
+            <ion-badge [color]="getRiskColor()" class="risk-badge">
+              {{ report.riskLevel | uppercase }}
+            </ion-badge>
+          </div>
+        </div>
+        <p class="period-text">
+          Periodo: {{ report.period.startDate }} a {{ report.period.endDate }}
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <ion-card class="metric-card">
+        <ion-card-content>
+          <ion-icon name="heart-outline" color="danger"></ion-icon>
+          <span class="metric-value">{{ report.averageBloodPressure.systolic }}/{{ report.averageBloodPressure.diastolic }}</span>
+          <span class="metric-label">Pressao Arterial Media (mmHg)</span>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="metric-card">
+        <ion-card-content>
+          <ion-icon name="pulse-outline" color="primary"></ion-icon>
+          <span class="metric-value">{{ report.averageHeartRate }}</span>
+          <span class="metric-label">Freq. Cardiaca Media (bpm)</span>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="metric-card">
+        <ion-card-content>
+          <ion-icon name="water-outline" color="tertiary"></ion-icon>
+          <span class="metric-value">{{ report.averageOxygenSaturation }}%</span>
+          <span class="metric-label">Saturacao Media (SpO2)</span>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="metric-card">
+        <ion-card-content>
+          <ion-icon name="fitness-outline" color="success"></ion-icon>
+          <span class="metric-value">{{ report.weightVariation }} kg</span>
+          <span class="metric-label">Variacao de Peso</span>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Symptoms -->
+    <ion-card *ngIf="symptomKeys.length > 0" class="symptoms-card">
+      <ion-card-header>
+        <ion-card-title>Sintomas Registrados</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="symptom-list">
+          <div *ngFor="let key of symptomKeys" class="symptom-item">
+            <ion-chip color="warning" outline="true">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <ion-label>{{ key }}</ion-label>
+            </ion-chip>
+            <ion-badge color="medium">{{ report!.symptomOccurrences[key] }}x</ion-badge>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Saude Cardiaca</string>
+    <string name="title_activity_main">Saude Cardiaca</string>
+    <string name="package_name">com.saudecardiaca.app</string>
+    <string name="custom_url_scheme">com.saudecardiaca.app</string>
+</resources>

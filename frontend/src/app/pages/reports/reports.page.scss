@@ -1,0 +1,158 @@
+ion-toolbar {
+  --background: #fff;
+  --color: #333;
+
+  ion-title {
+    color: #333;
+  }
+
+  ion-back-button {
+    color: #333;
+  }
+}
+
+.filter-card {
+  border-radius: 16px;
+  margin-bottom: 16px;
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-input {
+      flex: 1;
+      --border-radius: 12px;
+    }
+
+    ion-button {
+      --border-radius: 50%;
+      height: 44px;
+      width: 44px;
+      --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+  }
+}
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+
+  .error-icon {
+    font-size: 64px;
+    color: #ccc;
+  }
+
+  p {
+    color: #888;
+    margin-top: 12px;
+    text-align: center;
+  }
+}
+
+.risk-card {
+  border-radius: 16px;
+  margin-bottom: 16px;
+
+  .risk-display {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .risk-icon {
+      font-size: 48px;
+    }
+
+    .risk-label {
+      display: block;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .risk-badge {
+      font-size: 16px;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+  }
+
+  .period-text {
+    font-size: 13px;
+    color: #999;
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.metric-card {
+  border-radius: 16px;
+  margin: 0;
+
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px 12px;
+  }
+
+  ion-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: #999;
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+}
+
+.symptoms-card {
+  border-radius: 16px;
+
+  ion-card-title {
+    font-size: 16px;
+  }
+}
+
+.symptom-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.symptom-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  ion-chip {
+    --background: transparent;
+    margin: 0;
+  }
+
+  ion-badge {
+    font-size: 13px;
+    border-radius: 8px;
+    padding: 4px 10px;
+  }
+}

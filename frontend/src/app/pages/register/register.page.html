@@ -1,0 +1,129 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/login"
+        text=""
+        color="white"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title color="white">Criar Conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding register-content">
+  <div class="register-container">
+    <div class="form-card">
+      <div class="form-header">
+        <ion-icon name="person-add-outline" class="header-icon"></ion-icon>
+        <h2>Nova Conta</h2>
+      </div>
+
+      <ion-input
+        label="Nome"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="firstName"
+        placeholder="Seu nome"
+      ></ion-input>
+
+      <ion-input
+        label="Sobrenome"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="lastName"
+        placeholder="Seu sobrenome"
+      ></ion-input>
+
+      <ion-input
+        type="email"
+        label="E-mail"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="email"
+        placeholder="seu@email.com"
+      ></ion-input>
+
+      <ion-input
+        type="tel"
+        label="Telefone"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="phone"
+        placeholder="+55 11 99999-9999"
+      ></ion-input>
+
+      <ion-input
+        type="password"
+        label="Senha"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="password"
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+
+      <ion-input
+        type="password"
+        label="Confirmar Senha"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="confirmPassword"
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+
+      <ion-input
+        label="Data de Nascimento"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="birthDate"
+        placeholder="dd/MM/yyyy"
+      ></ion-input>
+
+      <ion-select
+        label="Sexo"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="gender"
+        interface="action-sheet"
+      >
+        <ion-select-option value="Masculino">Masculino</ion-select-option>
+        <ion-select-option value="Feminino">Feminino</ion-select-option>
+        <ion-select-option value="Outro">Outro</ion-select-option>
+      </ion-select>
+
+      <ion-input
+        label="Pais"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="country"
+        placeholder="Brasil"
+      ></ion-input>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="message error">{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-text color="success" *ngIf="successMessage">
+        <p class="message success">{{ successMessage }}</p>
+      </ion-text>
+
+      <ion-button
+        expand="block"
+        (click)="register()"
+        [disabled]="loading"
+        shape="round"
+      >
+        <ion-spinner *ngIf="loading" name="crescent" slot="start"></ion-spinner>
+        {{ loading ? 'Criando...' : 'Criar Conta' }}
+      </ion-button>
+
+      <div class="login-link">
+        <ion-text color="medium">
+          <p>Ja tem conta? <a [routerLink]="['/login']">Entrar</a></p>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+</ion-content>

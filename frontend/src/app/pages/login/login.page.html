@@ -1,0 +1,46 @@
+<ion-content class="ion-padding login-content">
+  <div class="login-container">
+    <div class="logo-section">
+      <ion-icon name="heart-outline" class="logo-icon"></ion-icon>
+      <h1>Saude Cardiaca</h1>
+      <p>Acompanhe sua saude do coracao</p>
+    </div>
+
+    <div class="form-section">
+      <ion-input
+        type="email"
+        label="E-mail"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="email"
+        placeholder="seu@email.com"
+      ></ion-input>
+
+      <ion-input
+        type="password"
+        label="Senha"
+        labelPlacement="floating"
+        fill="outline"
+        [(ngModel)]="password"
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        <p class="error-text">{{ errorMessage }}</p>
+      </ion-text>
+
+      <ion-button expand="block" (click)="login()" [disabled]="loading || !email || !password" shape="round">
+        <ion-spinner *ngIf="loading" name="crescent" slot="start"></ion-spinner>
+        <ion-icon *ngIf="!loading" name="log-in-outline" slot="start"></ion-icon>
+        {{ loading ? 'Entrando...' : 'Entrar' }}
+      </ion-button>
+
+      <div class="register-link">
+        <ion-text color="medium">
+          <p>Nao tem conta? <a [routerLink]="['/register']">Criar conta</a></p>
+        </ion-text>
+      </div>
+    </div>
+  </div>
+</ion-content>
