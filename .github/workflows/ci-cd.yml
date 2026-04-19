@@ -42,6 +42,9 @@ jobs:
     needs: [validate-commit]
     if: always() && (needs.validate-commit.result == 'success' || needs.validate-commit.result == 'skipped')
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,6 +73,9 @@ jobs:
     name: Testes Unitários
     needs: [build]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -89,7 +95,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-reports
-          path: target/surefire-reports/
+          path: backend/target/surefire-reports/
 
   # ──────────────────────────────────────────────
   # 4. Testes de integração
@@ -98,6 +104,9 @@ jobs:
     name: Testes de Integração
     needs: [build]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -117,7 +126,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: integration-test-reports
-          path: target/failsafe-reports/
+          path: backend/target/failsafe-reports/
 
   # ──────────────────────────────────────────────
   # 5. Release (só na main, após todos os testes)
@@ -127,6 +136,9 @@ jobs:
     needs: [validate-commit, unit-tests, integration-tests]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     permissions:
       contents: write
     steps:
@@ -175,6 +187,7 @@ jobs:
           echo "Nova versão: $NEW_TAG"
 
       - name: Criar tag
+        working-directory: .
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -194,5 +207,5 @@ jobs:
 
             ### Artefatos
             - JAR da aplicação incluído nesta release
-          files: target/*.jar
+          files: backend/target/*.jar
           generate_release_notes: true

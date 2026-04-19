@@ -1,0 +1,90 @@
+.login-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 24px;
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 48px;
+
+  .logo-icon {
+    font-size: 72px;
+    color: #fff;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 16px 0 4px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.form-section {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+  ion-input {
+    margin-bottom: 16px;
+    --border-radius: 12px;
+    color: black;
+  }
+
+  ion-button {
+    margin-top: 8px;
+    --border-radius: 12px;
+    height: 48px;
+    font-weight: 600;
+    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+}
+
+.error-text {
+  font-size: 13px;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 16px;
+
+  p {
+    font-size: 14px;
+  }
+
+  a {
+    color: #667eea;
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

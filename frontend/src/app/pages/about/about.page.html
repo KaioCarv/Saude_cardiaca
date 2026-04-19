@@ -1,0 +1,49 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/records" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sobre</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding about-content">
+  <div class="about-container">
+    <ion-card class="app-card">
+      <ion-card-content>
+        <div class="app-info">
+          <ion-icon name="heart-outline" class="app-icon"></ion-icon>
+          <h1>Saude Cardiaca</h1>
+          <p class="app-desc">
+            Sistema de Acompanhamento de Saude Cardiaca.
+            Registre e monitore seus sinais vitais para cuidar melhor do seu coracao.
+          </p>
+          <span class="version">Versao 1.0.0</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <h2 class="section-title">Equipe</h2>
+
+    <ion-card class="team-card">
+      <ion-list lines="none">
+        <ion-item *ngFor="let member of members">
+          <ion-avatar slot="start" class="member-avatar">
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <h3>{{ member.name }}</h3>
+            <p>{{ member.role }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <ion-card class="info-card">
+      <ion-card-content>
+        <p class="university">UNIRIO - Universidade Federal do Estado do Rio de Janeiro</p>
+        <p class="discipline">Programacao Modular</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

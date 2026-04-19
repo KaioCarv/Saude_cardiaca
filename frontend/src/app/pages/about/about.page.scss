@@ -1,0 +1,134 @@
+ion-toolbar {
+  --background: #fff;
+  --color: #333;
+
+  ion-title {
+    color: #333;
+  }
+
+  ion-back-button {
+    color: #333;
+  }
+}
+
+.about-content {
+  --background: #f5f6fa;
+}
+
+.about-container {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.app-card {
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+
+  ion-card-content {
+    padding: 32px 24px;
+  }
+
+  .app-info {
+    text-align: center;
+
+    .app-icon {
+      font-size: 64px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 12px 0 8px;
+    }
+
+    .app-desc {
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .version {
+      font-size: 12px;
+      opacity: 0.7;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+  }
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin: 24px 0 8px 4px;
+}
+
+.team-card {
+  border-radius: 16px;
+
+  ion-list {
+    padding: 8px 0;
+    background: transparent;
+  }
+
+  ion-item {
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    --min-height: 60px;
+    --background: transparent;
+
+    h3 {
+      font-weight: 600;
+      font-size: 16px;
+      color: #333;
+    }
+
+    p {
+      font-size: 13px;
+      color: #888;
+    }
+  }
+
+  .member-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    ion-icon {
+      font-size: 22px;
+      color: #fff;
+    }
+  }
+}
+
+.info-card {
+  border-radius: 16px;
+  text-align: center;
+  margin-top: 16px;
+
+  .university {
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .discipline {
+    color: #888;
+    font-size: 13px;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
