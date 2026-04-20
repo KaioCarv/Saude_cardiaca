@@ -53,6 +53,45 @@ ion-toolbar {
   }
 }
 
+.country-field {
+  position: relative;
+  margin-bottom: 12px;
+
+  ion-input {
+    margin-bottom: 0;
+  }
+
+  .country-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    margin: 4px 0 0;
+    padding: 4px 0;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    max-height: 220px;
+    overflow-y: auto;
+
+    li {
+      padding: 10px 16px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+
+      &:hover,
+      &:active {
+        background: #f1f3fb;
+        color: #667eea;
+      }
+    }
+  }
+}
+
 .message {
   font-size: 13px;
   text-align: center;

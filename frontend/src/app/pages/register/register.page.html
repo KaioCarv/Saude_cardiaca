@@ -49,8 +49,11 @@
         label="Telefone"
         labelPlacement="floating"
         fill="outline"
-        [(ngModel)]="phone"
-        placeholder="+55 11 99999-9999"
+        inputmode="numeric"
+        maxlength="15"
+        [value]="phone"
+        (ionInput)="onPhoneInput($event)"
+        placeholder="(11) 99999-9999"
       ></ion-input>
 
       <ion-input
@@ -60,7 +63,7 @@
         fill="outline"
         [(ngModel)]="password"
       >
-        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        <ion-input-password-toggle slot="end" color="medium" show-icon="eye-off" hide-icon="eye"></ion-input-password-toggle>
       </ion-input>
 
       <ion-input
@@ -70,15 +73,18 @@
         fill="outline"
         [(ngModel)]="confirmPassword"
       >
-        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        <ion-input-password-toggle slot="end" color="medium" show-icon="eye-off" hide-icon="eye"></ion-input-password-toggle>
       </ion-input>
 
       <ion-input
         label="Data de Nascimento"
         labelPlacement="floating"
         fill="outline"
-        [(ngModel)]="birthDate"
-        placeholder="dd/MM/yyyy"
+        inputmode="numeric"
+        maxlength="10"
+        [value]="birthDate"
+        (ionInput)="onBirthDateInput($event)"
+        placeholder="dd/mm/aaaa"
       ></ion-input>
 
       <ion-select
@@ -93,16 +99,34 @@
         <ion-select-option value="Outro">Outro</ion-select-option>
       </ion-select>
 
-      <ion-input
-        label="Pais"
-        labelPlacement="floating"
-        fill="outline"
-        [(ngModel)]="country"
-        placeholder="Brasil"
-      ></ion-input>
+      <div class="country-field">
+        <ion-input
+          label="País"
+          labelPlacement="floating"
+          fill="outline"
+          autocomplete="off"
+          [value]="country"
+          (ionInput)="onCountryInput($event)"
+          (ionFocus)="onCountryFocus()"
+          (ionBlur)="onCountryBlur()"
+          placeholder="Digite para buscar"
+        ></ion-input>
+
+        <ul class="country-suggestions" *ngIf="showCountryList && filteredCountries.length">
+          <li
+            *ngFor="let c of filteredCountries"
+            (mousedown)="selectCountry(c)"
+            (touchstart)="selectCountry(c)"
+          >
+            {{ c }}
+          </li>
+        </ul>
+      </div>
 
       <ion-text color="danger" *ngIf="errorMessage">
-        <p class="message error">{{ errorMessage }}</p>
+        <p class="message error" style="white-space: pre-line">
+          {{ errorMessage }}
+        </p>
       </ion-text>
 
       <ion-text color="success" *ngIf="successMessage">

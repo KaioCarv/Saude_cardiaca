@@ -6,7 +6,7 @@ import {
   IonContent, IonInput, IonButton, IonIcon, IonText, IonSpinner, IonInputPasswordToggle
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { heartOutline, logInOutline } from 'ionicons/icons';
+import { heartOutline, logInOutline, eye, eyeOff } from 'ionicons/icons';
 import { AuthService } from '../../services/auth.service';
 import { LoginRequest, ErrorResponse } from '../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,7 +29,7 @@ export class LoginPage {
   errorMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {
-    addIcons({ heartOutline, logInOutline });
+    addIcons({ heartOutline, logInOutline, eye, 'eye-off': eyeOff });
   }
 
   login(): void {
