@@ -10,7 +10,8 @@ import {
 import { addIcons } from 'ionicons';
 import {
   heartOutline, pulseOutline, waterOutline, fitnessOutline,
-  alertCircleOutline, shieldCheckmarkOutline, searchOutline, warningOutline
+  alertCircleOutline, shieldCheckmarkOutline, searchOutline, warningOutline,
+  sparklesOutline
 } from 'ionicons/icons';
 import { HeartHealthService } from '../../services/heart-health.service';
 import { HeartHealthReport } from '../../models/heart-health.model';
@@ -38,7 +39,8 @@ export class ReportsPage implements OnInit {
   constructor(private healthService: HeartHealthService, private router: Router) {
     addIcons({
       heartOutline, pulseOutline, waterOutline, fitnessOutline,
-      alertCircleOutline, shieldCheckmarkOutline, searchOutline, warningOutline
+      alertCircleOutline, shieldCheckmarkOutline, searchOutline, warningOutline,
+      'sparkles-outline': sparklesOutline
     });
   }
 

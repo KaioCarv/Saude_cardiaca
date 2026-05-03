@@ -131,10 +131,34 @@ export class RecordsPage implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         this.saving = false;
-        const error = err.error as ErrorResponse;
-        this.errorMessage = error?.mensagem || 'Erro ao salvar registro.';
+        this.errorMessage = this.parseBackendError(err);
       }
     });
+  }
+
+  private parseBackendError(err: HttpErrorResponse): string {
+    if (err.status === 0) {
+      return 'Sem conexão com o servidor. Tente novamente.';
+    }
+
+    const body = err.error as ErrorResponse | undefined;
+    const raw = body?.mensagem ?? '';
+
+    const match = raw.match(/Campos inválidos:\s*\[(.+)\]\.?/);
+    if (match) {
+      const items = match[1]
+        .split(';')
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(part => {
+          const colon = part.indexOf(':');
+          const msg = colon === -1 ? part : part.slice(colon + 1).trim();
+          return `• ${msg}`;
+        });
+      return items.join('\n');
+    }
+
+    return raw || 'Erro ao salvar registro.';
   }
 
   resetForm(): void {

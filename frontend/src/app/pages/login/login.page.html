@@ -23,16 +23,30 @@
         fill="outline"
         [(ngModel)]="password"
       >
-        <ion-input-password-toggle slot="end" color="medium" show-icon="eye-off" hide-icon="eye"></ion-input-password-toggle>
+        <ion-input-password-toggle
+          slot="end"
+          color="medium"
+          show-icon="eye-off"
+          hide-icon="eye"
+        ></ion-input-password-toggle>
       </ion-input>
 
       <ion-text color="danger" *ngIf="errorMessage">
         <p class="error-text">{{ errorMessage }}</p>
       </ion-text>
 
-      <ion-button expand="block" (click)="login()" [disabled]="loading || !email || !password" shape="round">
+      <ion-button
+        expand="block"
+        (click)="login()"
+        [disabled]="loading || !email || !password"
+        shape="round"
+      >
         <ion-spinner *ngIf="loading" name="crescent" slot="start"></ion-spinner>
-        <ion-icon *ngIf="!loading" name="log-in-outline" slot="start"></ion-icon>
+        <ion-icon
+          *ngIf="!loading"
+          name="log-in-outline"
+          slot="start"
+        ></ion-icon>
         {{ loading ? 'Entrando...' : 'Entrar' }}
       </ion-button>
 

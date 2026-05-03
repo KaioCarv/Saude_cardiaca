@@ -126,6 +126,40 @@ ion-toolbar {
   }
 }
 
+.insights-card {
+  border-radius: 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #f5f7ff 0%, #eef0ff 100%);
+
+  ion-card-title {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-icon {
+      font-size: 22px;
+    }
+  }
+
+  .insights-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    white-space: pre-line;
+    margin: 0 0 12px;
+  }
+
+  .disclaimer {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+    margin: 0;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+}
+
 .symptoms-card {
   border-radius: 16px;
 

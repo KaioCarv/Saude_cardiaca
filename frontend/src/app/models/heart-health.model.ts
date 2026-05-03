@@ -39,4 +39,5 @@ export interface HeartHealthReport {
   weightVariation: number;
   symptomOccurrences: { [key: string]: number };
   riskLevel: string;
+  aiInsights?: string;
 }

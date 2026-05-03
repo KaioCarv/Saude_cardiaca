@@ -99,7 +99,7 @@ public class GlobalExceptionHandler {
         if (path.contains("/register")) {
             return "Dados do cadastro enviados incorretamente.";
         } else if (path.contains("/login")) {
-            return "Dados do request enviados incorretos.";
+            return "Dados incorretos.";
         } else if (path.contains("/heart-health-records")) {
             return "Dados de acompanhamento enviados incorretamente.";
         } else if (path.contains("/heart-health-reports")) {

@@ -12,6 +12,7 @@ public class HeartHealthReportResponse {
     private Double weightVariation;
     private Map<String, Integer> symptomOccurrences;
     private String riskLevel;
+    private String aiInsights;
 
     public static class Period {
         private LocalDate startDate;
@@ -65,4 +66,7 @@ public class HeartHealthReportResponse {
 
     public String getRiskLevel() { return riskLevel; }
     public void setRiskLevel(String riskLevel) { this.riskLevel = riskLevel; }
+
+    public String getAiInsights() { return aiInsights; }
+    public void setAiInsights(String aiInsights) { this.aiInsights = aiInsights; }
 }

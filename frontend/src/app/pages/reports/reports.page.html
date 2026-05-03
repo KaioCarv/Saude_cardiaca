@@ -100,6 +100,23 @@
       </ion-card>
     </div>
 
+    <!-- IA Insights -->
+    <ion-card *ngIf="report.aiInsights" class="insights-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="sparkles-outline" color="primary"></ion-icon>
+          Insights da IA
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="insights-text">{{ report.aiInsights }}</p>
+        <p class="disclaimer">
+          Este resumo é gerado por IA com base nos seus dados e tem caráter informativo.
+          Não substitui consulta médica.
+        </p>
+      </ion-card-content>
+    </ion-card>
+
     <!-- Symptoms -->
     <ion-card *ngIf="symptomKeys.length > 0" class="symptoms-card">
       <ion-card-header>

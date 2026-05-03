@@ -17,9 +17,12 @@ import java.util.stream.Collectors;
 public class HeartHealthReportService {
 
     private final HeartHealthRecordRepository recordRepository;
+    private final GeminiService geminiService;
 
-    public HeartHealthReportService(HeartHealthRecordRepository recordRepository) {
+    public HeartHealthReportService(HeartHealthRecordRepository recordRepository,
+                                    GeminiService geminiService) {
         this.recordRepository = recordRepository;
+        this.geminiService = geminiService;
     }
 
     public HeartHealthReportResponse generateReport(Long userId, LocalDate startDate, LocalDate endDate) {
@@ -75,7 +78,62 @@ public class HeartHealthReportService {
 
         report.setRiskLevel(calculateRiskLevel(avgSystolic, avgDiastolic, avgHeartRate, avgOxygen, symptomMap));
 
+        report.setAiInsights(geminiService.generateInsights(buildPrompt(report, records.size())));
+
         return report;
+    }
+
+    private String buildPrompt(HeartHealthReportResponse report, int recordCount) {
+        StringBuilder symptoms = new StringBuilder();
+        if (report.getSymptomOccurrences() != null && !report.getSymptomOccurrences().isEmpty()) {
+            report.getSymptomOccurrences().forEach((s, c) ->
+                    symptoms.append("- ").append(s).append(": ").append(c).append(" vez(es)\n"));
+        } else {
+            symptoms.append("Nenhum sintoma registrado.\n");
+        }
+
+        return """
+                Analise estes dados agregados de monitoramento cardíaco e gere insights concretos em português.
+
+                DADOS (período %s a %s, %d registros):
+                - Pressão arterial média: %d/%d mmHg
+                - Frequência cardíaca média: %.1f bpm
+                - Saturação de oxigênio média: %.1f%%
+                - Variação de peso: %.1f kg
+                - Nível de risco: %s
+                - Sintomas:
+                %s
+
+                REGRAS OBRIGATÓRIAS:
+                - NÃO comece com saudação ("Olá", "Oi") nem diga que "analisou os dados".
+                - Comece direto pela análise dos valores.
+                - Cite os números reais ao comentar (ex: "A pressão média de 120/80 mmHg está...").
+                - Para cada métrica, diga se está dentro da faixa de referência adulto saudável e o que significa.
+                - Não invente valores nem dê diagnóstico clínico.
+
+                FORMATO (use exatamente estas seções, com **negrito**):
+
+                **Análise dos sinais vitais:** (3-5 frases comentando cada métrica com os valores reais)
+
+                **Pontos de atenção:** (lista os números fora da faixa ideal; se tudo normal, escreva "Sem alterações relevantes nos dados.")
+
+                **Sugestões de hábitos:** (3 sugestões objetivas e específicas, ligadas aos achados)
+
+                **Quando procurar um médico:** (1-2 frases sobre sinais que pedem avaliação)
+
+                Encerre com a frase: "Este resumo é informativo e não substitui consulta médica."
+                """.formatted(
+                report.getPeriod().getStartDate(),
+                report.getPeriod().getEndDate(),
+                recordCount,
+                report.getAverageBloodPressure().getSystolic(),
+                report.getAverageBloodPressure().getDiastolic(),
+                report.getAverageHeartRate(),
+                report.getAverageOxygenSaturation(),
+                report.getWeightVariation(),
+                report.getRiskLevel(),
+                symptoms.toString()
+        );
     }
 
     private String calculateRiskLevel(double avgSystolic, double avgDiastolic,
