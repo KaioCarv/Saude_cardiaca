@@ -28,6 +28,9 @@ class HeartHealthReportServiceTest {
     @Mock
     private HeartHealthRecordRepository recordRepository;
 
+    @Mock
+    private GeminiService geminiService;
+
     @InjectMocks
     private HeartHealthReportService reportService;
 

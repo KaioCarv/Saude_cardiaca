@@ -83,6 +83,7 @@ public class HeartHealthReportService {
         return report;
     }
 
+    
     private String buildPrompt(HeartHealthReportResponse report, int recordCount) {
         StringBuilder symptoms = new StringBuilder();
         if (report.getSymptomOccurrences() != null && !report.getSymptomOccurrences().isEmpty()) {
