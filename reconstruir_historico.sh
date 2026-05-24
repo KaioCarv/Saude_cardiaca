@@ -29,7 +29,7 @@ set -e
 YAN_NAME="Yan Costa";        YAN_EMAIL="yjesus247@gmail.com"
 KAIO_NAME="Kaio Sena";       KAIO_EMAIL="devkaiocarv@gmail.com"
 CLAUDIO_NAME="Claudio Coelho"; CLAUDIO_EMAIL="claudiocoelhosjr@gmail.com"
-GABRIEL_NAME="Gabriel Matos"; GABRIEL_EMAIL="gabriel.matos@edu.unirio.br"
+GABRIEL_NAME="Gabriel Matos"; GABRIEL_EMAIL="gabrielsfmatos@gmail.com "
 
 # ---- Funcao auxiliar de commit ------------------------------------------
 # uso: commit "Nome" "email" "YYYY-MM-DDTHH:MM:SS" "mensagem" path1 [path2 ...]

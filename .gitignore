@@ -18,7 +18,7 @@ target/
 .springBeans
 .sts4-cache
 .claude
-
+reconstruir_historico.sh
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
