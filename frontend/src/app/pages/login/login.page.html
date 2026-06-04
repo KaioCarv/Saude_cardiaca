@@ -2,8 +2,8 @@
   <div class="login-container">
     <div class="logo-section">
       <ion-icon name="heart-outline" class="logo-icon"></ion-icon>
-      <h1>Saude Cardiaca</h1>
-      <p>Acompanhe sua saude do coracao</p>
+      <h1>Saúde Cardiaca</h1>
+      <p>Acompanhe sua saúde do coração</p>
     </div>
 
     <div class="form-section">
@@ -49,6 +49,12 @@
         ></ion-icon>
         {{ loading ? 'Entrando...' : 'Entrar' }}
       </ion-button>
+
+      <div class="register-link">
+        <ion-text color="medium">
+          <p><a [routerLink]="['/forgot-password']">Esqueci minha senha</a></p>
+        </ion-text>
+      </div>
 
       <div class="register-link">
         <ion-text color="medium">
